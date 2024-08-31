@@ -7,7 +7,8 @@
 **Contenido:**
 
 - Códigos para el procesamiento del los datos y construcción del dataset.
+- Archivo del dataset utilizado.
 - Informe Final (PDF).
 - Diapositivas para la presentación (PDF).
-- Link al video de la presentación: 
+- Link al video de la presentación: -
 
