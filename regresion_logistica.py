@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
 import numpy as np
@@ -66,3 +66,12 @@ plt.xlabel('Predicción')
 plt.ylabel('Valor Real')
 plt.title('Matriz de Confusión')
 plt.show()
+
+# Crear el modelo de regresión logística
+modelo_cv = LogisticRegression(max_iter=1000)
+
+# Realizar validación cruzada con 5 particiones y calcular la precisión
+precision_cv = cross_val_score(modelo_cv, X, y, cv=5, scoring='accuracy')
+
+# Imprimir la precisión promedio y la desviación estándar
+print(f"Precisión promedio con validación cruzada: {precision_cv.mean()} (± {precision_cv.std()})")
