@@ -9,6 +9,7 @@
 - Códigos para el procesamiento del los datos y construcción del dataset.
 - Archivo del dataset utilizado.
 - Código del Análisis exploratorio de datos (EDA).
+- Gráficos interactivos disponibles en https://mutatiismutandiis.github.io/diplomatura-projecto-final/
 - Código de los modelos estadísticos aplicados: Regresión logística, Random Forest y Máquina de Soporte Vectorial (SVM).
 - Informe Final (PDF).
 - Diapositivas para la presentación (PDF).
