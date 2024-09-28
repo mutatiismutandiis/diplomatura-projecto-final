@@ -55,6 +55,7 @@ fig_parcial2.update_layout(
 )
 fig_parcial2.update_traces(marker_line_width=2, marker_line_color='black')
 fig_parcial2.show()
+pio.write_html(fig_parcial1, file='histograma_parcial_2.html', auto_open=True)
  
 # Proporción de estudiantes por género
 print("Proporción de estudiantes por género:")
@@ -131,49 +132,35 @@ fig_parcial2_genero.show()
 # Guardar el gráfico interactivo Parcial 2 por género
 pio.write_html(fig_parcial2_genero, file='histograma_parcial_2_por_genero.html', auto_open=True) 
 
-# =============================================================================
-# # Histograma para las calificaciones del Parcial 1 por género
-# bins = np.arange(0, 11, 1)
-# plt.figure(figsize=(10, 6))
-# sns.histplot(df_mujeres['parcial_1'], bins=bins, color='blue', label='Mujeres', kde=False, alpha=0.7, zorder=2)
-# sns.histplot(df_hombres['parcial_1'], bins=bins, color='green', label='Hombres', kde=False, alpha=0.6, zorder=1)
-# plt.title('Histograma de Calificaciones - Parcial 1 por Género')
-# plt.xlabel('Calificación')
-# plt.ylabel('Frecuencia')
-# plt.xticks(bins)  # Asegurarse de que los ticks del eje x coincidan con los bins
-# plt.legend()
-# plt.grid(True)
-# plt.savefig('histograma_parcial_1_por_genero.png')
-# plt.show()
-# 
-# # Histograma para las calificaciones del Parcial 2 por género
-# plt.figure(figsize=(10, 6))
-# bins=10
-# sns.histplot(df_mujeres['parcial_2'], bins=bins, color='blue', label='Mujeres', kde=False, alpha=0.7, zorder=2)
-# sns.histplot(df_hombres['parcial_2'], bins=bins, color='green', label='Hombres', kde=False, alpha=0.6, zorder=1)
-# plt.title('Histograma de Calificaciones - Parcial 2 por Género')
-# plt.xlabel('Calificación')
-# plt.ylabel('Frecuencia')
-# plt.legend()
-# plt.grid(True)
-# plt.savefig('histograma_parcial_2_por_genero.png')
-# plt.show()
-# 
-# 
-# # Añadir una columna 'genero_label' para los boxplots
-# df['genero_label'] = df['genero'].map({0: 'Mujeres', 1: 'Hombres'})
-# 
-# # Crear boxplots para cada calificación
-# for calificacion in calificaciones:
-#     plt.figure(figsize=(12, 6))
-#     sns.boxplot(x='genero_label', y=calificacion, data=df, palette="Set2")
-#     plt.title(f'Boxplot de Calificaciones - {calificacion.replace("_", " ").title()} por Género')
-#     plt.xlabel('Género')
-#     plt.ylabel('Calificación')
-#     plt.grid(True)
-#     plt.savefig(f'boxplot_{calificacion}_por_genero.png')
-#     plt.show()
-# 
+# Crear una nueva columna 'genero_label' para etiquetar los géneros correctamente en los boxplots
+df['genero_label'] = df['genero'].map({0: 'Mujeres', 1: 'Hombres'})
+
+# Crear boxplots interactivos para cada calificación (Parcial 1, Parcial 2, Nota Final)
+for calificacion in calificaciones:
+    fig_boxplot = px.box(df, x='genero_label', y=calificacion, color='genero_label',
+                         labels={'genero_label': 'Género', calificacion: 'Calificación'},
+                         title=f'Boxplot de Calificaciones - {calificacion.replace("_", " ").title()} por Género',
+                         color_discrete_map={'Mujeres': 'blue', 'Hombres': 'green'})
+    
+    fig_boxplot.update_layout(
+        xaxis_title='Género',
+        yaxis_title='Calificación',
+        legend_title_text='Género'
+    )
+    
+    fig_boxplot.update_traces(marker_line_width=2, marker_line_color='black')
+    
+    # Mostrar el gráfico interactivo
+    fig_boxplot.show()
+    
+    # Guardar el gráfico como un archivo HTML
+    pio.write_html(fig_boxplot, file=f'boxplot_{calificacion}_por_genero.html', auto_open=True)
+
+
+
+
+
+# ============================================================================= 
 # # Comparación de tasas de aprobación
 # tasa_aprobacion_general = df['aprobacion'].mean()
 # tasa_aprobacion_mujeres = df_mujeres['aprobacion'].mean()
@@ -224,15 +211,4 @@ pio.write_html(fig_parcial2_genero, file='histograma_parcial_2_por_genero.html',
 # 
 # print("\nEstadísticas descriptivas - Hombres (Número de insuficientes):")
 # print(estadisticas_insuf_hombres)
-# 
-# # Diagrama de Dispersión para Número de Intentos
-# plt.figure(figsize=(10, 6))
-# sns.scatterplot(x='nro_intentos', y='nro_insuficientes', hue='genero', data=df, palette={0: 'blue', 1: 'green'}, alpha=0.7)
-# plt.title('Número de Intentos vs. Número de Insuficientes por Género')
-# plt.xlabel('Número de Intentos')
-# plt.ylabel('Número de Insuficientes')
-# plt.legend(title='Género', labels=['Mujeres', 'Hombres'])
-# plt.grid(True)
-# plt.savefig('intentos_vs_insuficientes.png')
-# plt.show()
 # =============================================================================
