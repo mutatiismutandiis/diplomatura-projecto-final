@@ -55,45 +55,83 @@ fig_parcial2.update_layout(
 )
 fig_parcial2.update_traces(marker_line_width=2, marker_line_color='black')
 fig_parcial2.show()
+ 
+# Proporción de estudiantes por género
+print("Proporción de estudiantes por género:")
+proporcion_genero = df['genero'].value_counts(normalize=True)
+print(proporcion_genero)
+ 
+# Filtrar por género: 1 = Hombre, 0 = Mujer
+df_mujeres = df[df['genero'] == 0]
+df_hombres = df[df['genero'] == 1]
+ 
+# Calcular estadísticas descriptivas por género
+estadisticas_mujeres = df_mujeres[calificaciones].describe(percentiles=[0.25, 0.5, 0.75])
+estadisticas_hombres = df_hombres[calificaciones].describe(percentiles=[0.25, 0.5, 0.75])
+ 
+# Rango intercuartílico por género
+rango_intercuartilico_mujeres = estadisticas_mujeres.loc['75%'] - estadisticas_mujeres.loc['25%']
+estadisticas_mujeres.loc['rango_intercuartilico'] = rango_intercuartilico_mujeres
+ 
+rango_intercuartilico_hombres = estadisticas_hombres.loc['75%'] - estadisticas_hombres.loc['25%']
+estadisticas_hombres.loc['rango_intercuartilico'] = rango_intercuartilico_hombres
+ 
+# Mostrar estadísticas descriptivas por género
+print("\nEstadísticas descriptivas - Mujeres:")
+print(estadisticas_mujeres)
+ 
+print("\nEstadísticas descriptivas - Hombres:")
+print(estadisticas_hombres)
+
+# Histograma interactivo para las calificaciones del Parcial 1 por género
+fig_parcial1_genero = px.histogram(df, x='parcial_1', color='genero', nbins=10,
+                                   labels={'parcial_1': 'Calificación', 'genero': 'Género'},
+                                   color_discrete_map={0: 'blue', 1: 'green'},
+                                   barmode='overlay',  # Superponer los dos histogramas para compararlos
+                                   opacity=0.7)
+fig_parcial1_genero.update_layout(
+    title='Histograma de Calificaciones - Parcial 1 por Género',
+    xaxis=dict(
+        tickmode='linear',
+        tick0=0,
+        dtick=1,
+        range=[0, 10]
+    ),
+    yaxis_title='Frecuencia',
+    legend_title_text='Género'
+)
+fig_parcial1_genero.for_each_trace(lambda t: t.update(name='Mujeres' if t.name == '0' else 'Varones'))
+fig_parcial1_genero.update_traces(marker_line_width=2, marker_line_color='black')
+fig_parcial1_genero.show()
+
+# Guardar el gráfico interactivo Parcial 1 por género
+pio.write_html(fig_parcial1_genero, file='histograma_parcial_1_por_genero.html', auto_open=True)
+
+# Histograma interactivo para las calificaciones del Parcial 2 por género
+fig_parcial2_genero = px.histogram(df, x='parcial_2', color='genero', nbins=10,
+                                   labels={'parcial_2': 'Calificación', 'genero': 'Género'},
+                                   color_discrete_map={0: 'blue', 1: 'green'},
+                                   barmode='overlay',
+                                   opacity=0.7)
+fig_parcial2_genero.update_layout(
+    title='Histograma de Calificaciones - Parcial 2 por Género',
+    xaxis=dict(
+        tickmode='linear',
+        tick0=0,
+        dtick=1,
+        range=[0, 10]
+    ),
+    yaxis_title='Frecuencia',
+    legend_title_text='Género'
+)
+fig_parcial2_genero.for_each_trace(lambda t: t.update(name='Mujeres' if t.name == '0' else 'Varones'))
+fig_parcial2_genero.update_traces(marker_line_width=2, marker_line_color='black')
+fig_parcial2_genero.show()
+
+# Guardar el gráfico interactivo Parcial 2 por género
+pio.write_html(fig_parcial2_genero, file='histograma_parcial_2_por_genero.html', auto_open=True) 
 
 # =============================================================================
-# # Diagrama de bastones para la Calificación Final
-# plt.figure(figsize=(10, 6))
-# sns.countplot(x='nota_final', data=df, palette='viridis')
-# plt.title('Diagrama de Bastones - Calificación Final')
-# plt.xlabel('Calificación Final')
-# plt.ylabel('Frecuencia')
-# plt.grid(True)
-# plt.savefig('diagrama_bastones_nota_final.png')
-# plt.show()
-# 
-# # Proporción de estudiantes por género
-# print("Proporción de estudiantes por género:")
-# proporcion_genero = df['genero'].value_counts(normalize=True)
-# print(proporcion_genero)
-# 
-# # Filtrar por género: 1 = Hombre, 0 = Mujer
-# df_mujeres = df[df['genero'] == 0]
-# df_hombres = df[df['genero'] == 1]
-# 
-# # Calcular estadísticas descriptivas por género
-# estadisticas_mujeres = df_mujeres[calificaciones].describe(percentiles=[0.25, 0.5, 0.75])
-# estadisticas_hombres = df_hombres[calificaciones].describe(percentiles=[0.25, 0.5, 0.75])
-# 
-# # Rango intercuartílico por género
-# rango_intercuartilico_mujeres = estadisticas_mujeres.loc['75%'] - estadisticas_mujeres.loc['25%']
-# estadisticas_mujeres.loc['rango_intercuartilico'] = rango_intercuartilico_mujeres
-# 
-# rango_intercuartilico_hombres = estadisticas_hombres.loc['75%'] - estadisticas_hombres.loc['25%']
-# estadisticas_hombres.loc['rango_intercuartilico'] = rango_intercuartilico_hombres
-# 
-# # Mostrar estadísticas descriptivas por género
-# print("\nEstadísticas descriptivas - Mujeres:")
-# print(estadisticas_mujeres)
-# 
-# print("\nEstadísticas descriptivas - Hombres:")
-# print(estadisticas_hombres)
-# 
 # # Histograma para las calificaciones del Parcial 1 por género
 # bins = np.arange(0, 11, 1)
 # plt.figure(figsize=(10, 6))
@@ -121,15 +159,6 @@ fig_parcial2.show()
 # plt.savefig('histograma_parcial_2_por_genero.png')
 # plt.show()
 # 
-# # Diagrama de bastones para la Calificación Final por género
-# plt.figure(figsize=(10, 6))
-# sns.countplot(x='nota_final', hue='genero', data=df, palette='viridis')
-# plt.title('Diagrama de Bastones - Calificación Final por Género')
-# plt.xlabel('Calificación Final')
-# plt.ylabel('Frecuencia')
-# plt.grid(True)
-# plt.savefig('diagrama_bastones_nota_final_por_genero.png')
-# plt.show()
 # 
 # # Añadir una columna 'genero_label' para los boxplots
 # df['genero_label'] = df['genero'].map({0: 'Mujeres', 1: 'Hombres'})
