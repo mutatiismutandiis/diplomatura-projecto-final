@@ -11,7 +11,6 @@
 - Código del Análisis exploratorio de datos (EDA).
 - Gráficos interactivos disponibles en https://mutatiismutandiis.github.io/diplomatura-projecto-final/
 - Código de los modelos estadísticos aplicados: Regresión logística, Random Forest y Máquina de Soporte Vectorial (SVM).
-- Informe Final (PDF).
-- Diapositivas para la presentación (PDF).
+- Link a la versión final para la presentaciónÑ https://colab.research.google.com/drive/1nnmLF2hWvkC0eM26_LVPHh1rkUlvEQ8w?usp=sharing
 - Link al video de la presentación: -
 
