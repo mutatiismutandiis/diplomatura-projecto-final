@@ -17,6 +17,9 @@ df_notas4 = df_raw.iloc[:, [0, 4, 7, 8, 9, 12, 14]].copy()
 # Renombrar las columnas seleccionadas
 df_notas4.columns = ['nombre', 'parcial_1_1', 'parcial_2_1', 'rec_parcial_1', 'rec_parcial_2', 'nota_final', 'observaciones']
 
+# Conservar solo nombre de pila
+df_notas4['nombre'] = df_notas4['nombre'].apply(lambda x: x.split(",")[1].strip() if isinstance(x, str) and "," in x else x)
+
 # Procesar las notas de parciales y recuperatorios
 df_notas4['parcial_1'] = df_notas4.apply(lambda row: procesar_nota_parciales(row['parcial_1_1'], row['rec_parcial_1']), axis=1)
 df_notas4['parcial_2'] = df_notas4.apply(lambda row: procesar_nota_parciales(row['parcial_2_1'], row['rec_parcial_2']), axis=1)
