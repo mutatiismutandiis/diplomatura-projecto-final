@@ -28,9 +28,9 @@ def calcular_nro_intentos(df):
     """ Calcula el número de intentos basado en la nota final y los insuficientes. """
     def determinar_intentos(row):
         if pd.isna(row['nota_final']):
-            return 0 if pd.isna(row['nro_insuficientes']) else row['nro_insuficientes']
+            return row['nro_insuficientes']
         else:
-            return 1 if pd.isna(row['nro_insuficientes']) else 1 + row['nro_insuficientes']
+            return 1 + row['nro_insuficientes']
     
     df['nro_intentos'] = df.apply(determinar_intentos, axis=1)
 
