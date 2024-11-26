@@ -21,6 +21,9 @@ column_mapping = {
 # Leer el archivo excel, omitiendo la primera fila de títulos y usando la segunda fila para los encabezados
 df_notas1 = pd.read_excel(ruta_notas1, header=1)
 
+# Conservar solo nombre de pila
+df_notas1['APELLIDO Y NOMBRE'] = df_notas1['APELLIDO Y NOMBRE'].apply(lambda x: x.split(', ')[1] if ',' in x else x)
+
 # Renombrar las columnas según el mapeo
 df_notas1 = df_notas1.rename(columns=column_mapping)
 
@@ -28,11 +31,11 @@ df_notas1 = df_notas1.rename(columns=column_mapping)
 columnas_necesarias = list(column_mapping.values())
 df_notas1 = df_notas1[columnas_necesarias]
 
-# 1. Convertir guiones a valores NaN en las columnas de parciales
+# Convertir guiones a valores NaN en las columnas de parciales
 df_notas1['parcial_1'] = pd.to_numeric(df_notas1['parcial_1'], errors='coerce')
 df_notas1['parcial_2'] = pd.to_numeric(df_notas1['parcial_2'], errors='coerce')
 
-# 2. Limpiar la columna de nota final
+# Limpiar la columna de nota final
 def limpiar_nota_final(nota):
     if pd.isna(nota) or nota.strip() == '-':
         return np.nan
