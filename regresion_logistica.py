@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 archivo = 'conjunto_datos_completo.xlsx'
 df = pd.read_excel(archivo)
 
+# Eliminar datos de estudiantes que no rindieron los parciales
+df_cleaned = df.dropna(subset=['parcial_1', 'parcial_2']).copy()
+
 # Generar variables binarias para parcial_1 y parcial_2 (Aprobado = 1, No Aprobado = 0)
 df['parcial_1_aprobado'] = df['parcial_1'].apply(lambda x: 1 if pd.notnull(x) and x >= 6 else 0)
 df['parcial_2_aprobado'] = df['parcial_2'].apply(lambda x: 1 if pd.notnull(x) and x >= 6 else 0)
