@@ -31,6 +31,9 @@ df_notas_raw = df_notas_raw.rename(columns=column_mapping)
 columnas_necesarias = list(column_mapping.values())
 df_notas5 = df_notas_raw.loc[:, columnas_necesarias].copy()
 
+# Conservar solo nombre de pila
+df_notas5['nombre'] = df_notas5['nombre'].apply(lambda x: x.split(",")[1].strip() if isinstance(x, str) and "," in x else x)
+
 # Procesar las notas de parciales y recuperatorios
 df_notas5['parcial_1'] = df_notas5.apply(lambda row: procesar_nota_parciales(row['parcial_1_1'], row['parcial_1_2']), axis=1)
 df_notas5['parcial_2'] = df_notas5.apply(lambda row: procesar_notas_con_dos_rec(row['parcial_2_1'], row['parcial_2_2'], row['parcial_2_3']), axis=1)
