@@ -1,7 +1,4 @@
 import pandas as pd
-#import numpy as np
-#import matplotlib.pyplot as plt
-#import seaborn as sns
 import plotly.express as px
 import plotly.io as pio
 
@@ -42,7 +39,9 @@ fig_parcial1.show()
 pio.write_html(fig_parcial1, file='histograma_parcial_1.html', auto_open=True)
 
 # Histograma Calificaciones Parcial 2
-fig_parcial2 = px.histogram(df, x='parcial_2', nbins=10, labels={'parcial_2': 'Calificación'}, range_x=[0, 10])
+# Definimos manualmente los intervalos
+bin_edges = np.linspace(0, 10, 11)
+fig_parcial2 = px.histogram(df, x='parcial_2', labels={'parcial_2': 'Calificación'})
 fig_parcial2.update_layout(
     title='Histograma de Calificaciones - Parcial 2',
     xaxis=dict(
@@ -53,7 +52,7 @@ fig_parcial2.update_layout(
     ),
     yaxis_title='Frecuencia'
 )
-fig_parcial2.update_traces(marker_line_width=2, marker_line_color='black')
+fig_parcial2.update_traces(xbins=dict(start=bin_edges[0], end=bin_edges[-1], size=1), marker_line_width=2, marker_line_color='black')
 fig_parcial2.show()
 pio.write_html(fig_parcial1, file='histograma_parcial_2.html', auto_open=True)
  
@@ -109,7 +108,7 @@ fig_parcial1_genero.show()
 pio.write_html(fig_parcial1_genero, file='histograma_parcial_1_por_genero.html', auto_open=True)
 
 # Histograma interactivo para las calificaciones del Parcial 2 por género
-fig_parcial2_genero = px.histogram(df, x='parcial_2', color='genero', nbins=10,
+fig_parcial2_genero = px.histogram(df, x='parcial_2', color='genero',
                                    labels={'parcial_2': 'Calificación', 'genero': 'Género'},
                                    color_discrete_map={0: 'blue', 1: 'green'},
                                    barmode='overlay',
@@ -126,7 +125,7 @@ fig_parcial2_genero.update_layout(
     legend_title_text='Género'
 )
 fig_parcial2_genero.for_each_trace(lambda t: t.update(name='Mujeres' if t.name == '0' else 'Varones'))
-fig_parcial2_genero.update_traces(marker_line_width=2, marker_line_color='black')
+fig_parcial2_genero.update_traces(xbins=dict(start=bin_edges[0], end=bin_edges[-1], size=1), marker_line_width=2, marker_line_color='black')
 fig_parcial2_genero.show()
 
 # Guardar el gráfico interactivo Parcial 2 por género
@@ -157,58 +156,53 @@ for calificacion in calificaciones:
     pio.write_html(fig_boxplot, file=f'boxplot_{calificacion}_por_genero.html', auto_open=True)
 
 
+# Comparación de tasas de aprobación
+tasa_aprobacion_general = df['aprobacion'].mean()
+tasa_aprobacion_mujeres = df_mujeres['aprobacion'].mean()
+tasa_aprobacion_hombres = df_hombres['aprobacion'].mean()
+ 
+print("Tasa de Aprobación General:", tasa_aprobacion_general)
+print("Tasa de Aprobación Mujeres:", tasa_aprobacion_mujeres)
+print("Tasa de Aprobación Hombres:", tasa_aprobacion_hombres)
 
+# Análisis de las variables "Número de insuficientes" y "Número de intentos"
+# Reemplazar valores vacíos en 'nro_insu' por ceros
+df['nro_insuficientes'].fillna(0, inplace=True)
+ 
+# Convertir a entero si es necesario
+df['nro_insuficientes'] = df['nro_insuficientes'].astype(int)
+ 
+# Análisis del número de intentos
+estadisticas_intentos = df['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
+print("Estadísticas descriptivas del número de intentos:")
+print(estadisticas_intentos)
 
+# Análisis del número de insuficientes
+estadisticas_insuf = df['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
+print("\nEstadísticas descriptivas del número de insuficientes:")
+print(estadisticas_insuf)
+ 
+# Filtrar por género
+df_mujeres = df[df['genero'] == 0]
+df_hombres = df[df['genero'] == 1]
 
-# ============================================================================= 
-# # Comparación de tasas de aprobación
-# tasa_aprobacion_general = df['aprobacion'].mean()
-# tasa_aprobacion_mujeres = df_mujeres['aprobacion'].mean()
-# tasa_aprobacion_hombres = df_hombres['aprobacion'].mean()
-# 
-# print("Tasa de Aprobación General:", tasa_aprobacion_general)
-# print("Tasa de Aprobación Mujeres:", tasa_aprobacion_mujeres)
-# print("Tasa de Aprobación Hombres:", tasa_aprobacion_hombres)
-# 
-# # Análisis de las variables "Número de insuficientes" y "Número de intentos"
-# # Reemplazar valores vacíos en 'nro_insu' por ceros
-# df['nro_insuficientes'].fillna(0, inplace=True)
-# 
-# # Convertir a entero si es necesario
-# df['nro_insuficientes'] = df['nro_insuficientes'].astype(int)
-# 
-# # Análisis del número de intentos
-# estadisticas_intentos = df['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
-# print("Estadísticas descriptivas del número de intentos:")
-# print(estadisticas_intentos)
-# 
-# # Análisis del número de insuficientes
-# estadisticas_insuf = df['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
-# print("\nEstadísticas descriptivas del número de insuficientes:")
-# print(estadisticas_insuf)
-# 
-# # Filtrar por género
-# df_mujeres = df[df['genero'] == 0]
-# df_hombres = df[df['genero'] == 1]
-# 
-# # Estadísticas descriptivas por género para el número de intentos
-# estadisticas_intentos_mujeres = df_mujeres['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
-# estadisticas_intentos_hombres = df_hombres['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
-# 
-# # Estadísticas descriptivas por género para el número de insuficientes
-# estadisticas_insuf_mujeres = df_mujeres['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
-# estadisticas_insuf_hombres = df_hombres['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
-# 
-# # Mostrar estadísticas descriptivas por género
-# print("\nEstadísticas descriptivas - Mujeres (Número de intentos):")
-# print(estadisticas_intentos_mujeres)
-# 
-# print("\nEstadísticas descriptivas - Hombres (Número de intentos):")
-# print(estadisticas_intentos_hombres)
-# 
-# print("\nEstadísticas descriptivas - Mujeres (Número de insuficientes):")
-# print(estadisticas_insuf_mujeres)
-# 
-# print("\nEstadísticas descriptivas - Hombres (Número de insuficientes):")
-# print(estadisticas_insuf_hombres)
-# =============================================================================
+# Estadísticas descriptivas por género para el número de intentos
+estadisticas_intentos_mujeres = df_mujeres['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
+estadisticas_intentos_hombres = df_hombres['nro_intentos'].describe(percentiles=[0.25, 0.5, 0.75])
+
+# Estadísticas descriptivas por género para el número de insuficientes
+estadisticas_insuf_mujeres = df_mujeres['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
+estadisticas_insuf_hombres = df_hombres['nro_insuficientes'].describe(percentiles=[0.25, 0.5, 0.75])
+ 
+# Mostrar estadísticas descriptivas por género
+print("\nEstadísticas descriptivas - Mujeres (Número de intentos):")
+print(estadisticas_intentos_mujeres)
+ 
+print("\nEstadísticas descriptivas - Hombres (Número de intentos):")
+print(estadisticas_intentos_hombres)
+ 
+print("\nEstadísticas descriptivas - Mujeres (Número de insuficientes):")
+print(estadisticas_insuf_mujeres)
+ 
+print("\nEstadísticas descriptivas - Hombres (Número de insuficientes):")
+print(estadisticas_insuf_hombres)
