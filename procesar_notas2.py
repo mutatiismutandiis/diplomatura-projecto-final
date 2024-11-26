@@ -17,7 +17,10 @@ df_notas2 = df_raw.iloc[:, [0, 6, 7, 9, 11]].copy()
 # Renombrar las columnas seleccionadas
 df_notas2.columns = ['nombre', 'parcial_1', 'parcial_2', 'nota_final', 'observaciones']
 
-# 1. Convertir guiones a valores NaN en las columnas de parciales
+# Conservar solo nombre de pila
+df_notas2['nombre'] = df_notas2['nombre'].apply(lambda x: x.split(",")[1].strip() if isinstance(x, str) and "," in x else x)
+
+# Convertir guiones a valores NaN en las columnas de parciales
 df_notas2['parcial_1'] = pd.to_numeric(df_notas2['parcial_1'], errors='coerce')
 df_notas2['parcial_2'] = pd.to_numeric(df_notas2['parcial_2'], errors='coerce')
 
