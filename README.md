@@ -2,7 +2,7 @@
 
 **Título:** Análisis del Desempeño Académico en Probabilidad y Estadística - Impacto del Género y Estrategias para la Mejora
 
-**Fecha de presentación:** - 
+**Fecha de presentación:** 29/11/2024. 
 
 **Contenido:**
 
