@@ -55,7 +55,7 @@ fig_parcial2.update_layout(
 )
 fig_parcial2.update_traces(xbins=dict(start=bin_edges[0], end=bin_edges[-1], size=1), marker_line_width=2, marker_line_color='black')
 fig_parcial2.show()
-pio.write_html(fig_parcial1, file='histograma_parcial_2.html', auto_open=True)
+pio.write_html(fig_parcial2, file='histograma_parcial_2.html', auto_open=True)
  
 # Proporción de estudiantes por género
 print("Proporción de estudiantes por género:")
