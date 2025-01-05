@@ -13,5 +13,5 @@
 - Código de los modelos estadísticos aplicados: Regresión logística, Random Forest y Máquina de Soporte Vectorial (SVM).
 - Link a la versión final de Colab para la presentación con el análisis correspondiente: https://colab.research.google.com/drive/1nnmLF2hWvkC0eM26_LVPHh1rkUlvEQ8w?usp=sharing
   _(Observación: No se brinda acceso a los archivos originales para proteger la privacidad de los estudiantes, por lo tanto, no se puede correr la notebook de colab)_
-- Link al video de la presentación: -
+- Link al video de la presentación: https://youtu.be/-GXgOdmrUJ4?si=Pf4Nd9t_uNbdcuCw
 
