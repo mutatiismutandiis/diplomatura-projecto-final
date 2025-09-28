@@ -12,8 +12,10 @@
 - Interactive visualizations available at: https://mutatiismutandiis.github.io/diplomatura-projecto-final/
 - Code for applied statistical models: Logistic Regression, Random Forest, and Support Vector Machine (SVM).
 - Link to the final Colab notebook used for the presentation and analysis: https://colab.research.google.com/drive/1nnmLF2hWvkC0eM26_LVPHh1rkUlvEQ8w?usp=sharing
-  _Note: Access to original files is restricted to protect student privacy, so the notebook cannot be executed_
+  
+  _(Note: Access to original files is restricted to protect student privacy, so the notebook cannot be executed)_
 - Link to the presentation video: https://youtu.be/-GXgOdmrUJ4?si=Pf4Nd9t_uNbdcuCw
-  _Note: Presentation is in Spanish._
+  
+  _(Note: Presentation is in Spanish.)_
 
 
